@@ -34,6 +34,11 @@ boolean Plant::needsWater() {
   int sensorValue = readSoil();
   //need to test this value
   if(sensorValue < 600){
+    Serial.println("Soil Too Dry!");
+    return true;
+  }
+  if (hoursSinceWater > minimumWaterHours) {
+    Serial.println("Hour Threshold Passed!");
     return true;
   }
   return false;
