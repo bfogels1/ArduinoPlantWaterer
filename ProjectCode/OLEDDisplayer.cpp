@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "OLEDDisplayer.h"
 
 OLEDDisplayer::OLEDDisplayer() {}
@@ -24,7 +23,7 @@ void OLEDDisplayer::displayData(int plantNumber, int soilMoistureReading, int li
   display->setCursor(0,0);
   display->print("Plant: ");
   display->println(plantNumber);
-  display->print("Moisture Level: ");
+  display->print("Moisture: ");
   display->println(soilMoistureReading);
   display->print("Light Percent: ");
   display->print(lightReading);

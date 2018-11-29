@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "Plant.h"
 
 Plant::Plant() { }
