@@ -3,7 +3,7 @@
 
 Plant::Plant() { }
 
-Plant::Plant(String type, int position, int actuatorPin,
+Plant::Plant(String type, int plantNum, int actuatorPin,
 	     int rotatePin, int soilMoisturePin, int soilPower,
 	     int lightSensorPin, int tempSensorPin) {
   
@@ -21,8 +21,8 @@ Plant::Plant(String type, int position, int actuatorPin,
     // 3 Day Minimum Water Time                              
     this->minimumWaterHours = 24 * 3;
   }
-
-  this->position = position;
+  this->displayer = OLEDDisplayer(14);
+  this->plantNum = plantNum;
   this->actuatorPin = actuatorPin;
   this->rotatePin = rotatePin;
   this->soilMoisturePin = soilMoisturePin;
@@ -35,8 +35,11 @@ Plant::Plant(String type, int position, int actuatorPin,
 
 boolean Plant::needsWater() {
   int soilSensorValue = readSoil();
+  int lightSensorValue = analogRead(lightSensorPin);
+  int tempSensorValue = analogRead(tempSensorPin);
   boolean soilTooDry = (soilSensorValue < 600);
   boolean hourThresholdPassed = (hoursSinceWater > minimumWaterHours);
+  displayer.displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
   //need to test this value
   if(soilTooDry){
     Serial.println("Soil Too Dry!");

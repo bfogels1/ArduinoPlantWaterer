@@ -3,13 +3,14 @@
 
 // the #include statment and code go here...
 #include "Arduino.h"
+#include "OLEDDisplayer.h"
 
 class Plant
 {
 public:
   Plant();
   Plant(String type,
-  	int position,
+  	int plantNum,
   	int actuatorPin,
   	int rotatePin,
   	int soilMoisturePin,
@@ -21,8 +22,9 @@ public:
   void giveWater();
   void hourPassed();
 private:
+  OLEDDisplayer displayer;
   String type;
-  int position;
+  int plantNum;
   int actuatorPin;
   int rotatePin;
   int soilMoisturePin;
