@@ -9,11 +9,13 @@ class Plant
 public:
   Plant();
   Plant(String type,
-	int position,
-	int actuatorPin,
-	int rotatePin,
-	int soilMoisturePin,
-  int soilPower);
+  	int position,
+  	int actuatorPin,
+  	int rotatePin,
+  	int soilMoisturePin,
+    int soilPower,
+    int lightSensorPin,
+    int tempSensorPin);
 
   boolean needsWater();
   void giveWater();
@@ -25,6 +27,8 @@ private:
   int rotatePin;
   int soilMoisturePin;
   int soilPower;
+  int lightSensorPin;
+  int tempSensorPin;
   unsigned long hoursSinceWater;
   unsigned long minimumWaterHours;
   //void rotateToPosition();

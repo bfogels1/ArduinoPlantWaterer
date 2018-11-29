@@ -4,7 +4,8 @@
 Plant::Plant() { }
 
 Plant::Plant(String type, int position, int actuatorPin,
-	     int rotatePin, int soilMoisturePin, int soilPower) {
+	     int rotatePin, int soilMoisturePin, int soilPower,
+	     int lightSensorPin, int tempSensorPin) {
   
   // Check type of plant and use it to calculate minimumWaterTime
   if (type == "cactus") {
@@ -26,18 +27,22 @@ Plant::Plant(String type, int position, int actuatorPin,
   this->rotatePin = rotatePin;
   this->soilMoisturePin = soilMoisturePin;
   this->soilPower = soilPower;
+  this->lightSensorPin = lightSensorPin;
+  this->tempSensorPin = tempSensorPin;
   this->hoursSinceWater = 0;
   pinMode(soilMoisturePin, INPUT);
 }
 
 boolean Plant::needsWater() {
-  int sensorValue = readSoil();
+  int soilSensorValue = readSoil();
+  boolean soilTooDry = (soilSensorValue < 600);
+  boolean hourThresholdPassed = (hoursSinceWater > minimumWaterHours);
   //need to test this value
-  if(sensorValue < 600){
+  if(soilTooDry){
     Serial.println("Soil Too Dry!");
     return true;
   }
-  if (hoursSinceWater > minimumWaterHours) {
+  if (hourThresholdPassed) {
     Serial.println("Hour Threshold Passed!");
     return true;
   }

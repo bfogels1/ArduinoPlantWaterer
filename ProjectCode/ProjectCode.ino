@@ -3,7 +3,9 @@
 
 Plant plants[numOfPlants];
 const int soilPower = 5;
-const int soilMoisturePins[1] = {0}; // was A0
+const int soilMoisturePins[numOfPlants] = {0}; // was A0
+const int lightSensorPins[numOfPlants] = {1};
+const int tempSensorPins[numOfPlants] = {2};
 
 int actuatorPin = 3;
 int rotatePin = 4;
@@ -16,16 +18,14 @@ void setup() {
   pinMode(soilPower, OUTPUT);
   for (int i = 0; i < numOfPlants; i++) {
     plants[i] = Plant("default", i, actuatorPin, 
-                          rotatePin, soilMoisturePins[i], soilPower);
+                          rotatePin, soilMoisturePins[i], soilPower,
+                          lightSensorPins[i],tempSensorPins[i]);
   }
 
 //  pinMode(actuatorPin, OUTPUT);
 //  pinMode(rotatePin, OUTPUT);
 
-//  for (int i = 0; i < 3; i++) {
-//    plants[i] = Plant("default", i, actuatorPin, 
-//                          rotatePin, soilMoisturePins[i]);
-//  }
+
 
 }
 
