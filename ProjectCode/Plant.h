@@ -25,6 +25,9 @@ private:
   OLEDDisplayer displayer;
   String type;
   int plantNum;
+  int soilSensorValue;
+  int lightSensorValue;
+  int tempSensorValue;
   int actuatorPin;
   int rotatePin;
   int soilMoisturePin;
@@ -36,6 +39,8 @@ private:
   //void rotateToPosition();
   //void returnToDefaultPosition();
   int readSoil();
+  int readLight();
+  int readTemp();
 };
 
 #endif

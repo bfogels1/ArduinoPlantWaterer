@@ -26,9 +26,10 @@ void OLEDDisplayer::displayData(int plantNumber, int soilMoistureReading, int li
   display->println(plantNumber);
   display->print("Moisture Level: ");
   display->println(soilMoistureReading);
-  display->print("Light Level: ");
-  display->println(lightReading);
-  display->print("Temp Level: ");
+  display->print("Light Percent: ");
+  display->print(lightReading);
+  display->println("%");
+  display->print("Degrees F: ");
   display->println(tempReading);
   display->print("Hours Passed: ");
   display->println(hoursPassed);

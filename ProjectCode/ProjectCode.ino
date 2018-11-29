@@ -3,9 +3,9 @@
 
 Plant plants[numOfPlants];
 const int soilPower = 5;
-const int soilMoisturePins[numOfPlants] = {0}; // was A0
-const int lightSensorPins[numOfPlants] = {1};
-const int tempSensorPins[numOfPlants] = {2};
+const int soilMoisturePins[numOfPlants] = {A0}; // was A0
+const int lightSensorPins[numOfPlants] = {A1};
+const int tempSensorPins[numOfPlants] = {A2};
 
 int actuatorPin = 3;
 int rotatePin = 4;
@@ -52,8 +52,11 @@ void delayMin(int minutes) {
   }
 }
 
+
+
 void delayHour() {
-  delayMin(60);
+  //delayMin(60);
+  delay(1000);
   for (int i=0; i < numOfPlants; i++) {
     plants[i].hourPassed();
   } 
