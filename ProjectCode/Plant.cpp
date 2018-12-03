@@ -38,7 +38,7 @@ boolean Plant::needsWater() {
   tempSensorValue = readTemp();
   boolean soilTooDry = (soilSensorValue < 600);
   boolean hourThresholdPassed = (hoursSinceWater > minimumWaterHours);
-  displayer.displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
+  displayInfo();
   //need to test this value
   if(soilTooDry){
     Serial.println("Soil Too Dry!");

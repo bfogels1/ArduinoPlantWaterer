@@ -15,6 +15,7 @@ public:
 private:
     int actuatorPin;
     int rotatePin;
+    Plant currentPlantPosition;
     
     void moveToPosition(Plant p);
     void returnToDefaultPosition();
