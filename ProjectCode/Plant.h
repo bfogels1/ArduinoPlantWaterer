@@ -11,8 +11,6 @@ public:
   Plant();
   Plant(String type,
   	int plantNum,
-  	int actuatorPin,
-  	int rotatePin,
   	int soilMoisturePin,
     int soilPower,
     int lightSensorPin,
@@ -21,6 +19,8 @@ public:
   boolean needsWater();
   void giveWater();
   void hourPassed();
+  void resetHours();
+  void displayInfo();
 private:
   OLEDDisplayer displayer;
   String type;
@@ -28,16 +28,12 @@ private:
   int soilSensorValue;
   int lightSensorValue;
   int tempSensorValue;
-  int actuatorPin;
-  int rotatePin;
   int soilMoisturePin;
   int soilPower;
   int lightSensorPin;
   int tempSensorPin;
   unsigned long hoursSinceWater;
   unsigned long minimumWaterHours;
-  //void rotateToPosition();
-  //void returnToDefaultPosition();
   int readSoil();
   int readLight();
   int readTemp();

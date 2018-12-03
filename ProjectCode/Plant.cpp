@@ -2,8 +2,7 @@
 
 Plant::Plant() { }
 
-Plant::Plant(String type, int plantNum, int actuatorPin,
-	     int rotatePin, int soilMoisturePin, int soilPower,
+Plant::Plant(String type, int plantNum, int soilMoisturePin, int soilPower,
 	     int lightSensorPin, int tempSensorPin) {
   
   // Check type of plant and use it to calculate minimumWaterTime
@@ -22,8 +21,6 @@ Plant::Plant(String type, int plantNum, int actuatorPin,
   }
   this->displayer = OLEDDisplayer(14);
   this->plantNum = plantNum;
-  this->actuatorPin = actuatorPin;
-  this->rotatePin = rotatePin;
   this->soilMoisturePin = soilMoisturePin;
   this->soilPower = soilPower;
   this->lightSensorPin = lightSensorPin;
@@ -54,20 +51,13 @@ boolean Plant::needsWater() {
   return false;
 }
 
-void Plant::giveWater() {
-    hoursSinceWater = 0;
+void Plant::displayInfo() {
     displayer.displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
-    Serial.println("Watered");
 }
 
-// for rotating table
-//void Plant::rotateToPosition()  {
-//    Serial.println("Rotated");
-//}
-//
-//void Plant::returnToDefaultPosition() {
-//    Serial.println("Default Pos");
-//}
+void Plant::resetHours() {
+  hoursSinceWater = 0;
+}
 
 void Plant::hourPassed() {
   hoursSinceWater++;
