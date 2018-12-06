@@ -7,6 +7,7 @@ const int yellow = 11;
 const int blue = 12;
 const int red = 13;
 int sensorValue = 0;
+int pumpPin = 3;
 
 void setup() {
 
@@ -15,6 +16,7 @@ void setup() {
   pinMode(blue,OUTPUT);
   pinMode(red,OUTPUT);
   pinMode(soilPower, OUTPUT);
+  pinMode(pumpPin, OUTPUT);
 }
 
 void loop() {
@@ -22,6 +24,7 @@ void loop() {
   Serial.print(analogRead(lightSensor));
   Serial.print("   Soil Moisture:   ");
   sensorValue = readSoil();
+  runMotor();
   Serial.print(sensorValue);
   Serial.println();
   delay(300);
@@ -33,4 +36,17 @@ int readSoil(){
   int val = analogRead(soilMoisture);
   digitalWrite(soilPower, LOW);
   return val;
+}
+
+int runMotor(){
+   if (readSoil() < 600){
+    //Serial.print("");
+      digitalWrite(pumpPin, HIGH);
+      delay(1000);
+//      digitalWrite(pumpPin, LOW);
+    }
+   else{
+    digitalWrite(pumpPin, LOW);
+    delay(1000);
+    }
 }

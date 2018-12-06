@@ -9,6 +9,7 @@
 #include <gfxfont.h>
 #include <Adafruit_SSD1306.h>
 #include <Wire.h> 
+#include "Plant.h"
 
 
 class OLEDDisplayer
@@ -18,6 +19,9 @@ public:
   OLEDDisplayer(int OLEDPin);
 
   void displayData(int, int, int, int, int);
+  void displayData(Plant p);
+  void displayData(Plant p[], int count);
+  void clearScreen();
 private:
   int OLEDPin;
   Adafruit_SSD1306 *display;

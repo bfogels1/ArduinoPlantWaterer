@@ -19,7 +19,7 @@ Plant::Plant(String type, int plantNum, int soilMoisturePin, int soilPower,
     // 3 Day Minimum Water Time                              
     this->minimumWaterHours = 24 * 3;
   }
-  this->displayer = OLEDDisplayer(14);
+  //this->displayer = displayer;
   this->plantNum = plantNum;
   this->soilMoisturePin = soilMoisturePin;
   this->soilPower = soilPower;
@@ -30,39 +30,56 @@ Plant::Plant(String type, int plantNum, int soilMoisturePin, int soilPower,
   this->lightSensorValue = 0;
   this->tempSensorValue = 0;
   pinMode(soilMoisturePin, INPUT);
+  pinMode(lightSensorPin, INPUT);
+  pinMode(tempSensorPin, INPUT);
+  pinMode(soilPower, OUTPUT);
 }
 
 boolean Plant::needsWater() {
+  Serial.print("needWater");
   soilSensorValue = readSoil();
   lightSensorValue = readLight();;
   tempSensorValue = readTemp();
+  Serial.print("afterReading");
   boolean soilTooDry = (soilSensorValue < 600);
   boolean hourThresholdPassed = (hoursSinceWater > minimumWaterHours);
+  clearDisplay();
   displayInfo();
+  //delay(1000);
+  //Serial.println(hoursSinceWater);
   //need to test this value
   if(soilTooDry){
-    Serial.println("Soil Too Dry!");
+    //Serial.println("Soil Too Dry!");
     return true;
   }
   if (hourThresholdPassed) {
-    Serial.println("Hour Threshold Passed!");
+    //Serial.println("Hour Threshold Passed!");
     return true;
   }
   return false;
 }
 
 void Plant::displayInfo() {
-    displayer.displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
+    //displayer->displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
+}
+
+void Plant::clearDisplay() {
+ // displayer->clearScreen();
 }
 
 void Plant::resetHours() {
   hoursSinceWater = 0;
+  /*
+  Serial.print("hoursSinceWater: ");
+  Serial.println(hoursSinceWater);
+  */
 }
 
 void Plant::hourPassed() {
   hoursSinceWater++;
 }
 
+/* OLD
 int Plant::readSoil(){
   digitalWrite(soilPower, HIGH);
   delay(10);
@@ -70,6 +87,13 @@ int Plant::readSoil(){
   digitalWrite(soilPower, LOW);
   return val;
 }
+*/
+
+int Plant::readSoil() {
+  int val = analogRead(soilMoisturePin);
+  return 1023 - val;
+}
+
 
 int Plant::readLight() {
   int val = analogRead(lightSensorPin) * 100 / 1023;
@@ -80,4 +104,22 @@ int Plant::readTemp() {
   int val = ((analogRead(tempSensorPin) * 5000 / 1023) - 500) / 10;
   val = (((val * 1.8) + 32) * -1) + 25;
   return val;
+}
+
+int Plant::getPlantNum() {
+  return plantNum;
+}
+
+int Plant::getSoilSensorValue() {
+  return soilSensorValue;
+}
+int Plant::getLightSensorValue() {
+  return lightSensorValue;
+}
+int Plant::getTempSensorValue() {
+  return tempSensorValue;
+}
+
+unsigned long Plant::getHoursSinceWater() {
+  return hoursSinceWater;
 }

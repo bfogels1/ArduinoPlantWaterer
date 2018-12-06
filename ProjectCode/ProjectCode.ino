@@ -1,23 +1,28 @@
 #include "Plant.h"
 #include "Waterer.h"
-#define numOfPlants 1
+#include "OLEDDisplayer.h"
+#define numOfPlants 2
 
 Plant plants[numOfPlants];
 Waterer waterer;
+OLEDDisplayer displayer;
 
 const int soilPower = 5;
-const int soilMoisturePins[numOfPlants] = {A0}; // was A0
-const int lightSensorPins[numOfPlants] = {A1};
-const int tempSensorPins[numOfPlants] = {A2};
+const int soilMoisturePins[numOfPlants] = {A0, A3}; // was A0
+const int lightSensorPins[numOfPlants] = {A1, A1};
+const int tempSensorPins[numOfPlants] = {A2, A2};
 
-const int actuatorPin = 3;
-const int rotatePin = 4;
+const int pumpPin = 3;
+const int rotatePin = 2;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  waterer = Waterer(rotatePin,actuatorPin);
-  pinMode(soilPower, OUTPUT);
+  waterer = Waterer(pumpPin, rotatePin);
+  //Serial.print("right here");
+  displayer = OLEDDisplayer(14);
+  //Serial.print("right here");
+  //displayer->displayData(1, 1, 1, 1, 1);
   for (int i = 0; i < numOfPlants; i++) {
     plants[i] = Plant("default", i, soilMoisturePins[i], soilPower,
                       lightSensorPins[i],tempSensorPins[i]);
@@ -27,10 +32,17 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   for (int i = 0; i < numOfPlants; i++) {
+    //displayer.displayData(plants[i]);
+    //delay(1000);
     if (plants[i].needsWater()) {
+      //Serial.print("plant address: ");
+      //Serial.println(int(plants)+i);
+      Serial.print("Give water: ");
+      Serial.print(i);
       waterer.giveWater(plants[i]);
     }
   }
+  //displayer.displayData(plants, numOfPlants);
 
   // Delay 60 minutes to save Arduino battery
   delayHour();

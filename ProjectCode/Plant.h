@@ -3,7 +3,7 @@
 
 // the #include statment and code go here...
 #include "Arduino.h"
-#include "OLEDDisplayer.h"
+//#include "OLEDDisplayer.h"
 
 class Plant
 {
@@ -21,18 +21,24 @@ public:
   void hourPassed();
   void resetHours();
   void displayInfo();
+  void clearDisplay();
+  int getPlantNum();
+  int getSoilSensorValue();
+  int getLightSensorValue();
+  int getTempSensorValue();
+  unsigned long getHoursSinceWater();
 private:
-  OLEDDisplayer displayer;
+  //OLEDDisplayer *displayer;
   String type;
   int plantNum;
   int soilSensorValue;
   int lightSensorValue;
   int tempSensorValue;
+  unsigned long hoursSinceWater;
   int soilMoisturePin;
   int soilPower;
   int lightSensorPin;
   int tempSensorPin;
-  unsigned long hoursSinceWater;
   unsigned long minimumWaterHours;
   int readSoil();
   int readLight();
