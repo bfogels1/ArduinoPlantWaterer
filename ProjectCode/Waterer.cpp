@@ -8,18 +8,11 @@ Waterer::Waterer(int pumpPin, int rotatePin) {
   this->currentPlantPosition = Plant();
   this->servo.attach(rotatePin);
   pinMode(pumpPin, OUTPUT);
-  //pinMode(rotatePin, OUTPUT);
 }
 
 void Waterer::giveWater(Plant& p) {
-    //p.hoursSinceWater = 0;
     p.resetHours();
-    p.clearDisplay();
-    p.displayInfo();
     delay(1000);
-    //Serial.print("address in waterer:");
-    //Serial.println(int(&p));
-    // TO-DO: ACTUALLY WATER
     moveToPosition(p);
     digitalWrite(pumpPin, HIGH);
     delay(1000);
@@ -31,8 +24,8 @@ void Waterer::giveWater(Plant& p) {
 }
 
 void Waterer::moveToPosition(Plant& p) {
-    Serial.print("Moved to Position:");
-    Serial.println(p.getPlantNum());
+    //Serial.print("Moved to Position: ");
+    //Serial.println(p.getPlantNum());
     switch (p.getPlantNum()){
       case 0:
         Serial.println(0);

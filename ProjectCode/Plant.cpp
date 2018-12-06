@@ -36,29 +36,24 @@ Plant::Plant(String type, int plantNum, int soilMoisturePin, int soilPower,
 }
 
 boolean Plant::needsWater() {
-  Serial.print("needWater");
+  //Serial.print("needWater");
   soilSensorValue = readSoil();
   lightSensorValue = readLight();;
   tempSensorValue = readTemp();
-  Serial.print("afterReading");
   boolean soilTooDry = (soilSensorValue < 600);
   boolean hourThresholdPassed = (hoursSinceWater > minimumWaterHours);
-  clearDisplay();
-  displayInfo();
-  //delay(1000);
-  //Serial.println(hoursSinceWater);
+
   //need to test this value
   if(soilTooDry){
-    //Serial.println("Soil Too Dry!");
     return true;
   }
   if (hourThresholdPassed) {
-    //Serial.println("Hour Threshold Passed!");
     return true;
   }
   return false;
 }
 
+/*
 void Plant::displayInfo() {
     //displayer->displayData(plantNum, soilSensorValue, lightSensorValue, tempSensorValue, hoursSinceWater);
 }
@@ -66,13 +61,10 @@ void Plant::displayInfo() {
 void Plant::clearDisplay() {
  // displayer->clearScreen();
 }
+*/
 
 void Plant::resetHours() {
   hoursSinceWater = 0;
-  /*
-  Serial.print("hoursSinceWater: ");
-  Serial.println(hoursSinceWater);
-  */
 }
 
 void Plant::hourPassed() {

@@ -11,16 +11,14 @@ OLEDDisplayer::OLEDDisplayer(int OLEDPin) {
   #endif
 
   // initialize display
-  Serial.print("In OLEDDISPLAYER");
   this->display = new Adafruit_SSD1306(OLEDPin);  
   display->begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  Serial.print("OUT OLEDDISPLAYER");
   display->clearDisplay(); 
   display->setTextSize(1);
   display->setTextColor(WHITE);
-  Serial.print("OUT OLEDDISPLAYER");
 }
 
+/*
 void OLEDDisplayer::displayData(int plantNumber, int soilMoistureReading, int lightReading, int tempReading, int hoursPassed) {
   //Shouldn't be here
   //display->clearDisplay();
@@ -38,16 +36,53 @@ void OLEDDisplayer::displayData(int plantNumber, int soilMoistureReading, int li
   display->println(hoursPassed);
   //display->display();
 }
+*/
 
 void OLEDDisplayer::displayData(Plant p) {
   displayData(p.getPlantNum(), p.getSoilSensorValue(), p.getLightSensorValue(), p.getTempSensorValue(), p.getHoursSinceWater());
 }
 
+/*
+void OLEDDisplayer::displayData(Plant p[], int count) {
+  //Serial.print("display_data");
+  display->clearDisplay();
+  display->setCursor(0,0);
+  display->print("display_data");
+  display->display();
+  for (int i=0; i < count; i++) {
+    Serial.print("i:");
+    Serial.println(i);
+    displayData(p[i].getPlantNum(), p[i].getSoilSensorValue(), p[i].getLightSensorValue(), p[i].getTempSensorValue(), p[i].getHoursSinceWater());
+  }
+  display->display();
+}
+*/
+
 void OLEDDisplayer::displayData(Plant p[], int count) {
   display->clearDisplay();
   display->setCursor(0,0);
+  if (count < 1) {
+    display->println("Error");
+    display->display();
+    return;
+  }
+  
+  display->print("Light:        ");
+  display->print(p[0].getLightSensorValue());
+  display->println("%");
+  display->print("Degrees F:    ");
+  display->println(p[0].getTempSensorValue());
   for (int i=0; i < count; i++) {
-    displayData(p[i].getPlantNum(), p[i].getSoilSensorValue(), p[i].getLightSensorValue(), p[i].getTempSensorValue(), p[i].getHoursSinceWater());
+    display->print("Soil  ");
+    display->print(p[i].getPlantNum());
+    display->print(":      ");
+    display->println(p[i].getSoilSensorValue());
+    
+    display->print("Hours ");
+    display->print(p[i].getPlantNum());
+    display->print(":      ");
+    display->println(p[i].getHoursSinceWater());
+    //displayData(p[i].getPlantNum(), p[i].getSoilSensorValue(), p[i].getLightSensorValue(), p[i].getTempSensorValue(), p[i].getHoursSinceWater());
   }
   display->display();
 }
